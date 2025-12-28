@@ -8,14 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedImage: Int?
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationSplitView {
+            List(0..<10, selection: $selectedImage) { i in
+                Text("Storm: \(i+1)")
+            }
+        } detail: {
+            Group {
+                if let selectedImage {
+                    Image("\(selectedImage)")
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    Text("No Selected Image")
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .navigationTitle("Storms")
         }
-        .padding()
+        .frame(minWidth: 480, minHeight: 320)
     }
 }
 
